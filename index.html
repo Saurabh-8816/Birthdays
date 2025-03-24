@@ -1,67 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Page Input Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .frame {
+      width: 375px;
+      height: 812px;
+      border: 16px solid black;
+      border-radius: 36px;
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .input-container {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+    }
+    .input-container h1 {
+      font-size: 37px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .input-container p {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .input-container input {
+      width: 80%;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 25px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .input-container button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      background-color: #ff7f50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .input-container button:hover {
+      background-color: #ff6347;
+    }
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      background-color: #ccc;
+      color: black;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .back-button:hover {
+      background-color: #bbb;
+    }
+    .mic-button {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 20px;
+      border: none;
+      border-radius: 50%;
+      background-color: #ff7f50;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .mic-button:hover {
+      background-color: #ff6347;
+    }
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+  </style>
 </head>
-<body background="style..jpg">
-
-    <audio id="song">
-        <source src="BDAY.mp3">
-   </audio>
-
-    <div class="back"></div>
-    <div class="area">
-        <div class="one">
-            Happiest Birthday
+<body>
+  <div class="frame">
+    <div class="page active" id="page1">
+      <button class="back-button" onclick="prevPage()" style="visibility: hidden;">Back</button>
+      <div class="input-container">
+        <p class="text-orange-500 text-lg">Input start</p>
+        <h1 class="text-4xl font-bold">अपना नाम दर्ज करें</h1>
+        <div class="flex justify-center items-center mt-4">
+          <input type="text" placeholder="Enter your name" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
+          <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
         </div>
-        <div class="name">Naina!</div>
-        <pre class="det">
-               Alisha- Our laughs...Limitless! Our memories...Countless! Our friendship...Endless!
-               Vashu - Happy Birthday to the sweet... Nah!! Crazy,annoying,bhukkad.
-               Neha - Something in Haryana.
-               Your SB - Happy Birthday Naina!
-    </pre>
+      </div>
     </div>
-    <div class="imgarea">
-        <div class="img left">
-            <div data-aos="zoom-in"></div>
-            <img src="Sixth.jpg" alt="" width="300px" >
+    <div class="page" id="page2">
+      <button class="back-button" onclick="prevPage()">Back</button>
+      <div class="input-container">
+        <p class="text-orange-500 text-lg">Input 2nd</p>
+        <h1 class="text-4xl font-bold">अपना उपनाम दर्ज करें</h1>
+        <div class="flex justify-center items-center mt-4">
+          <input type="text" placeholder="Enter your surname" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
+          <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
         </div>
+      </div>
     </div>
-    <div class="img right">
-        <div data-aos="zoom-in"></div>
-        <img src="Second.jpg" alt="" width="300px">
+    <div class="page" id="page3">
+      <button class="back-button" onclick="prevPage()">Back</button>
+      <div class="input-container">
+        <p class="text-orange-500 text-lg">Input 3rd</p>
+        <h1 class="text-4xl font-bold">अपना फ़ोन नंबर दर्ज करें</h1>
+        <div class="flex justify-center items-center mt-4">
+          <input type="text" placeholder="Enter your phone no" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
+          <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
-</div> <div class="img left">
-    <div data-aos="zoom-in"></div>
-    <img src="Third.jpg" alt="" width="300px">
-</div>
-</div> <div class="img right">
-    <div data-aos="zoom-in"></div>
-    <img src="Fourth.jpg" alt="" width="300px" >
-</div>
-</div>
-<div class="img left">
-    <div data-aos="zoom-in"></div>
-    <img src="Fifth.jpg" alt="" width="300px">
-</div>
-</div>
-<div class="img right">
-    <div data-aos="zoom-in"></div>
-    <img src="first.jpg" alt="" width="300px">
-</div>
-</div>
-    <script>
-        AOS.init(0);
-        window.addEventListener('click',()=>{
-            document.getElementById("song").play();
-        });
-      </script>
+    <div class="page" id="page4">
+      <button class="back-button" onclick="prevPage()">Back</button>
+      <div class="input-container">
+        <p class="text-orange-500 text-lg">Input 4th</p>
+        <h1 class="text-4xl font-bold">अपना पता दर्ज करें</h1>
+        <div class="flex justify-center items-center mt-4">
+          <input type="text" placeholder="Enter your address" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
+          <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="page" id="page5">
+      <button class="back-button" onclick="prevPage()">Back</button>
+      <div class="input-container">
+        <p class="text-orange-500 text-lg">Input 5th</p>
+        <h1 class="text-4xl font-bold">अपना प्रश्न दर्ज करें</h1>
+        <div class="flex justify-center items-center mt-4">
+          <input type="text" placeholder="Enter your question" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
+          <button class="ml-2 bg-orange-500 text-white rounded-full p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <button class="mic-button">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v11m0 0a4 4 0 004-4V5a4 4 0 00-8 0v3a4 4 0 004 4zm0 0v4m0 4h.01" />
+      </svg>
+    </button>
+  </div>
+
+  <script>
+    let currentPage = 1;
+
+    function showPage(page) {
+      document.querySelectorAll('.page').forEach((page) => {
+        page.classList.remove('active');
+      });
+      document.getElementById(`page${page}`).classList.add('active');
+    }
+
+    function nextPage() {
+      if (currentPage < 5) {
+        currentPage++;
+        showPage(currentPage);
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        showPage(currentPage);
+      }
+    }
+  </script>
 </body>
 </html>
