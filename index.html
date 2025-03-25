@@ -102,15 +102,31 @@
     .page.active {
       display: block;
     }
+    .translate-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      background-color: #ccc;
+      color: black;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .translate-button:hover {
+      background-color: #bbb;
+    }
   </style>
 </head>
 <body>
   <div class="frame">
+    <button class="translate-button" onclick="translatePage()">Translate</button>
     <div class="page active" id="page1">
       <button class="back-button" onclick="prevPage()" style="visibility: hidden;">Back</button>
       <div class="input-container">
-        <p class="text-orange-500 text-lg">Input start</p>
-        <h1 class="text-4xl font-bold">अपना नाम दर्ज करें</h1>
+        <p class="text-orange-500 text-lg" id="input-start">Input start</p>
+        <h1 class="text-4xl font-bold" id="enter-name">अपना नाम दर्ज करें</h1>
         <div class="flex justify-center items-center mt-4">
           <input type="text" placeholder="Enter your name" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
           <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
@@ -124,8 +140,8 @@
     <div class="page" id="page2">
       <button class="back-button" onclick="prevPage()">Back</button>
       <div class="input-container">
-        <p class="text-orange-500 text-lg">Input 2nd</p>
-        <h1 class="text-4xl font-bold">अपना उपनाम दर्ज करें</h1>
+        <p class="text-orange-500 text-lg" id="input-2nd">Input 2nd</p>
+        <h1 class="text-4xl font-bold" id="enter-surname">अपना उपनाम दर्ज करें</h1>
         <div class="flex justify-center items-center mt-4">
           <input type="text" placeholder="Enter your surname" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
           <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
@@ -139,8 +155,8 @@
     <div class="page" id="page3">
       <button class="back-button" onclick="prevPage()">Back</button>
       <div class="input-container">
-        <p class="text-orange-500 text-lg">Input 3rd</p>
-        <h1 class="text-4xl font-bold">अपना फ़ोन नंबर दर्ज करें</h1>
+        <p class="text-orange-500 text-lg" id="input-3rd">Input 3rd</p>
+        <h1 class="text-4xl font-bold" id="enter-phone">अपना फ़ोन नंबर दर्ज करें</h1>
         <div class="flex justify-center items-center mt-4">
           <input type="text" placeholder="Enter your phone no" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
           <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
@@ -154,8 +170,8 @@
     <div class="page" id="page4">
       <button class="back-button" onclick="prevPage()">Back</button>
       <div class="input-container">
-        <p class="text-orange-500 text-lg">Input 4th</p>
-        <h1 class="text-4xl font-bold">अपना पता दर्ज करें</h1>
+        <p class="text-orange-500 text-lg" id="input-4th">Input 4th</p>
+        <h1 class="text-4xl font-bold" id="enter-address">अपना पता दर्ज करें</h1>
         <div class="flex justify-center items-center mt-4">
           <input type="text" placeholder="Enter your address" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
           <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
@@ -169,8 +185,8 @@
     <div class="page" id="page5">
       <button class="back-button" onclick="prevPage()">Back</button>
       <div class="input-container">
-        <p class="text-orange-500 text-lg">Input 5th</p>
-        <h1 class="text-4xl font-bold">अपना प्रश्न दर्ज करें</h1>
+        <p class="text-orange-500 text-lg" id="input-5th">Input 5th</p>
+        <h1 class="text-4xl font-bold" id="enter-question">अपना प्रश्न दर्ज करें</h1>
         <div class="flex justify-center items-center mt-4">
           <input type="text" placeholder="Enter your question" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
           <button class="ml-2 bg-orange-500 text-white rounded-full p-2">
@@ -210,6 +226,30 @@
         currentPage--;
         showPage(currentPage);
       }
+    }
+
+    function translatePage() {
+      const elementsToTranslate = [
+        { id: 'input-start', en: 'Input start', hi: 'इनपुट प्रारंभ' },
+        { id: 'enter-name', en: 'Enter your name', hi: 'अपना नाम दर्ज करें' },
+        { id: 'input-2nd', en: 'Input 2nd', hi: 'दूसरा इनपुट' },
+        { id: 'enter-surname', en: 'Enter your surname', hi: 'अपना उपनाम दर्ज करें' },
+        { id: 'input-3rd', en: 'Input 3rd', hi: 'तीसरा इनपुट' },
+        { id: 'enter-phone', en: 'Enter your phone no', hi: 'अपना फ़ोन नंबर दर्ज करें' },
+        { id: 'input-4th', en: 'Input 4th', hi: 'चौथा इनपुट' },
+        { id: 'enter-address', en: 'Enter your address', hi: 'अपना पता दर्ज करें' },
+        { id: 'input-5th', en: 'Input 5th', hi: 'पांचवां इनपुट' },
+        { id: 'enter-question', en: 'Enter your question', hi: 'अपना प्रश्न दर्ज करें' }
+      ];
+
+      elementsToTranslate.forEach(element => {
+        const el = document.getElementById(element.id);
+        if (el.innerText === element.en) {
+          el.innerText = element.hi;
+        } else {
+          el.innerText = element.en;
+        }
+      });
     }
   </script>
 </body>
