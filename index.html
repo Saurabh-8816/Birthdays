@@ -3,254 +3,330 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multi-Page Input Form</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Multi-Page UI</title>
   <style>
     body {
-      background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      font-family: Arial, sans-serif;
       margin: 0;
-    }
-    .frame {
-      width: 375px;
-      height: 812px;
-      border: 16px solid black;
-      border-radius: 36px;
-      box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
-      position: relative;
-      overflow: hidden;
-      background-color: white;
+      padding: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-    }
-    .input-container {
-      width: 100%;
-      padding: 20px;
-      text-align: center;
-    }
-    .input-container h1 {
-      font-size: 37px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 20px;
-    }
-    .input-container p {
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 20px;
-    }
-    .input-container input {
-      width: 80%;
-      padding: 10px;
-      border: 2px solid #ccc;
-      border-radius: 25px;
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-    .input-container button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      background-color: #ff7f50;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .input-container button:hover {
-      background-color: #ff6347;
-    }
-    .back-button {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      background-color: #ccc;
-      color: black;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .back-button:hover {
-      background-color: #bbb;
-    }
-    .mic-button {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 20px;
-      border: none;
-      border-radius: 50%;
-      background-color: #ff7f50;
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-    }
-    .mic-button:hover {
-      background-color: #ff6347;
     }
     .page {
       display: none;
+      width: 90%;
+      max-width: 600px;
+      margin: 20px 0;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+
+    .page {
+      display: none;
+      width: 90%; /* Adjusted for responsiveness */
+      max-width: 600px;
+      margin: 20px 0;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
     .page.active {
       display: block;
     }
-    .translate-button {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+    .nav-buttons {
+      margin-top: 20px;
+    }
+    .nav-buttons button {
       padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      background-color: #ccc;
-      color: black;
-      font-size: 16px;
+      margin: 0 5px;
+      border: 1px solid blue;
+      border-radius: 4px;
+      background-color: white;
+      color: blue;
       cursor: pointer;
     }
-    .translate-button:hover {
-      background-color: #bbb;
+    .nav-buttons button:hover {
+      background-color: blue;
+      color: white;
+    }
+    form label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    form label.mandatory::after {
+      content: " *";
+      color: red;
+    }
+    form input[type="text"],
+    form textarea {
+      width: 100%; /* Adjusted for responsiveness */
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    form input[type="radio"] {
+      margin-right: 5px;
+    }
+    /* Slide to Next Page Styles */
+    .slide-container {
+      position: relative;
+      width: 90%;
+      max-width: 300px; /* Ensures it doesn't exceed 300px */
+      height: 50px;
+      background-color: #f0f0f0;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .slide-track {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #910808d1;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .slide-text {
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      white-space: nowrap;
+      margin-left: 10px;
+    }
+
+    .slide-button {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .slide-button span {
+      font-size: 20px;
+      color: #64183f;
+    }
+
+     /* Responsive Design */
+     @media (max-width: 768px) {
+      .page {
+        padding: 15px;
+      }
+      .slide-container {
+        height: 45px;
+      }
+      .slide-button {
+        width: 40px;
+        height: 40px;
+      }
+      .slide-text {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .slide-container {
+        height: 40px;
+      }
+      .slide-button {
+        width: 35px;
+        height: 35px;
+      }
+      .slide-text {
+        font-size: 12px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="frame">
-    <button class="translate-button" onclick="translatePage()">Translate</button>
-    <div class="page active" id="page1">
-      <button class="back-button" onclick="prevPage()" style="visibility: hidden;">Back</button>
-      <div class="input-container">
-        <p class="text-orange-500 text-lg" id="input-start">Input start</p>
-        <h1 class="text-4xl font-bold" id="enter-name">अपना नाम दर्ज करें</h1>
-        <div class="flex justify-center items-center mt-4">
-          <input type="text" placeholder="Enter your name" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
-          <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
+  <div id="page1" class="page active">
+    <form>
+        <label class="mandatory">क्या आपका व्यवसाय नया है या मौजूदा है?</label>
+        <input type="radio" name="businessStatus" value="नया" required> नया
+        <input type="radio" name="businessStatus" value="मौजूदा" required> मौजूदा
+        <br>
+        <label class="mandatory">आपके व्यवसाय का नाम क्या है (यदि कोई हो)?</label>
+        <input type="text" name="businessName" required>
+        <br>
+        <label class="mandatory">आपका व्यवसाय कहाँ स्थित है?</label>
+        <input type="text" name="state" placeholder="राज्य" required>
+        <input type="text" name="city" placeholder="शहर" required>
+        <br>
+        <label class="mandatory">आप किस प्रकार का व्यवसाय चलाते हैं?</label>
+        <input type="radio" name="businessType" value="अपना" required> उत्पाद
+        <input type="radio" name="businessType" value="सेवा" required> सेवा
+        <br>
+        <label class="mandatory">संक्षेप में बताएं कि आप क्या बेचते हैं या प्रदान करते हैं?</label>
+        <textarea name="description" required></textarea>
+    </form>
+    <div id="slide-container-page1" class="slide-container">
+      <div id="slide-track-page1" class="slide-track">
+        <span class="slide-text">Slide to next page</span>
+        <div id="slide-button-page1" class="slide-button">
+          <span>&#x27A4;</span>
         </div>
       </div>
     </div>
-    <div class="page" id="page2">
-      <button class="back-button" onclick="prevPage()">Back</button>
-      <div class="input-container">
-        <p class="text-orange-500 text-lg" id="input-2nd">Input 2nd</p>
-        <h1 class="text-4xl font-bold" id="enter-surname">अपना उपनाम दर्ज करें</h1>
-        <div class="flex justify-center items-center mt-4">
-          <input type="text" placeholder="Enter your surname" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
-          <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="page" id="page3">
-      <button class="back-button" onclick="prevPage()">Back</button>
-      <div class="input-container">
-        <p class="text-orange-500 text-lg" id="input-3rd">Input 3rd</p>
-        <h1 class="text-4xl font-bold" id="enter-phone">अपना फ़ोन नंबर दर्ज करें</h1>
-        <div class="flex justify-center items-center mt-4">
-          <input type="text" placeholder="Enter your phone no" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
-          <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="page" id="page4">
-      <button class="back-button" onclick="prevPage()">Back</button>
-      <div class="input-container">
-        <p class="text-orange-500 text-lg" id="input-4th">Input 4th</p>
-        <h1 class="text-4xl font-bold" id="enter-address">अपना पता दर्ज करें</h1>
-        <div class="flex justify-center items-center mt-4">
-          <input type="text" placeholder="Enter your address" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
-          <button class="ml-2 bg-orange-500 text-white rounded-full p-2" onclick="nextPage()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="page" id="page5">
-      <button class="back-button" onclick="prevPage()">Back</button>
-      <div class="input-container">
-        <p class="text-orange-500 text-lg" id="input-5th">Input 5th</p>
-        <h1 class="text-4xl font-bold" id="enter-question">अपना प्रश्न दर्ज करें</h1>
-        <div class="flex justify-center items-center mt-4">
-          <input type="text" placeholder="Enter your question" class="border-2 border-gray-300 rounded-full px-4 py-2 w-3/4">
-          <button class="ml-2 bg-orange-500 text-white rounded-full p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-    <button class="mic-button">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v11m0 0a4 4 0 004-4V5a4 4 0 00-8 0v3a4 4 0 004 4zm0 0v4m0 4h.01" />
-      </svg>
-    </button>
   </div>
 
-  <script>
-    let currentPage = 1;
+  <div id="page2" class="page">
+    <form>
+        <label class="mandatory">आपकी वर्तमान मासिक आय सीमा क्या है?</label>
+        <input type="text" name="incomeRange" required>
+        <br>
+        <label  class="mandatory">आपके यहां कितने कर्मचारी हैं?</label>
+        <input type="number" name="employees" required>
+        <br>
+        <label class="mandatory">आपकी सबसे बड़ी चुनौतियां क्या हैं?</label>
+        <textarea name="challenges" required></textarea>
+        <br>
+        <label>क्या आपको वित्तीय या किसी सहायता चाहिए?</label>
+        <input type="radio" name="assistance" value="हाँ"> हाँ
+        <input type="radio" name="assistance" value="नहीं"> नहीं
+        <br>
+        <label>क्या आपको मार्केटिंग, ग्राहक प्रबंधन या सोशल मीडिया की भी ज़रूरत है?</label>
+        <input type="radio" name="marketing" value="हाँ"> हाँ
+        <input type="radio" name="marketing" value="नहीं"> नहीं
+    </form>
+    <div id="slide-container-page2" class="slide-container">
+      <div id="slide-track-page2" class="slide-track">
+        <span class="slide-text">Slide to next page</span>
+        <div id="slide-button-page2" class="slide-button">
+          <span>&#x27A4;</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    function showPage(page) {
-      document.querySelectorAll('.page').forEach((page) => {
+  <div id="page3" class="page">
+    <form>
+        <label class="mandatory">क्या आपने किसी सरकारी योजना या एमएसएमई/एसएमई लाभ का लाभ उठाया है?</label>
+        <input type="radio" name="govtScheme" value="हाँ"  required> हाँ
+        <input type="radio" name="govtScheme" value="नहीं" required> नहीं
+        <input type="radio" name="govtScheme" value="जानकारी नहीं है" required> जानकारी नहीं है
+        <br>
+        <label class="mandatory">क्या आप प्रासंगिक नीतियों और अनुदानों के बारे में जानने में रुचि रखते हैं?</label>
+        <input type="radio" name="policies" value="हाँ" required> हाँ
+        <input type="radio" name="policies" value="नहीं" required> नहीं
+  
+        <br>
+        <label class="mandatory">व्यापार के प्रकार</label>
+        <select name="businessType" required>
+          <option value="" disabled selected>कृपया चुनें</option>
+          <option value="FMCG" >FMCG</option>
+          <option value="कृषि">कृषि</option>
+          <option value="परिवहन">परिवहन</option>
+        </select>
+    </form>
+    <div id="slide-container-page3" class="slide-container">
+      <div id="slide-track-page3" class="slide-track">
+        <span class="slide-text">Slide to next page</span>
+        <div id="slide-button-page3" class="slide-button">
+          <span>&#x27A4;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="page4" class="page">
+    <form>
+      <label class="mandatory">आपको किस चीज़ में तत्काल मदद की ज़रूरत है?</label>
+      <input type="text" name="immediateHelp" required>
+      <br>
+      <label>क्या आप अपने व्यवसाय को बढ़ाने के लिए चरण-दर-चरण कार्य योजना चाहते हैं?</label>
+      <input type="radio" name="businessPlan" value="हाँ"> हाँ
+      <input type="radio" name="businessPlan" value="नहीं"> नहीं
+    </form>
+    <div class="nav-buttons">
+      <!-- <button onclick="showPage('page3')">Previous Page</button> -->
+      <button onclick="showPage('page3')">Submit</button>
+    </div>
+  </div>
+
+
+  <script>
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => {
         page.classList.remove('active');
       });
-      document.getElementById(`page${page}`).classList.add('active');
+      document.getElementById(pageId).classList.add('active');
     }
 
-    function nextPage() {
-      if (currentPage < 5) {
-        currentPage++;
-        showPage(currentPage);
-      }
-    }
+    function initializeSlider(slideButtonId, slideTrackId, slideContainerId, nextPageId) {
+      const slideButton = document.getElementById(slideButtonId);
+      const slideTrack = document.getElementById(slideTrackId);
+      const slideContainer = document.getElementById(slideContainerId);
 
-    function prevPage() {
-      if (currentPage > 1) {
-        currentPage--;
-        showPage(currentPage);
-      }
-    }
+      let isSliding = false;
+      let startX = 0;
 
-    function translatePage() {
-      const elementsToTranslate = [
-        { id: 'input-start', en: 'Input start', hi: 'इनपुट प्रारंभ' },
-        { id: 'enter-name', en: 'Enter your name', hi: 'अपना नाम दर्ज करें' },
-        { id: 'input-2nd', en: 'Input 2nd', hi: 'दूसरा इनपुट' },
-        { id: 'enter-surname', en: 'Enter your surname', hi: 'अपना उपनाम दर्ज करें' },
-        { id: 'input-3rd', en: 'Input 3rd', hi: 'तीसरा इनपुट' },
-        { id: 'enter-phone', en: 'Enter your phone no', hi: 'अपना फ़ोन नंबर दर्ज करें' },
-        { id: 'input-4th', en: 'Input 4th', hi: 'चौथा इनपुट' },
-        { id: 'enter-address', en: 'Enter your address', hi: 'अपना पता दर्ज करें' },
-        { id: 'input-5th', en: 'Input 5th', hi: 'पांचवां इनपुट' },
-        { id: 'enter-question', en: 'Enter your question', hi: 'अपना प्रश्न दर्ज करें' }
-      ];
+      slideButton.addEventListener('mousedown', (e) => {
+        isSliding = true;
+        startX = e.clientX;
+        slideButton.style.transition = 'none';
+        slideTrack.style.transition = 'none';
+      });
 
-      elementsToTranslate.forEach(element => {
-        const el = document.getElementById(element.id);
-        if (el.innerText === element.en) {
-          el.innerText = element.hi;
-        } else {
-          el.innerText = element.en;
+      document.addEventListener('mousemove', (e) => {
+        if (!isSliding) return;
+
+        const moveX = e.clientX - startX;
+        const maxMove = slideContainer.offsetWidth - slideButton.offsetWidth;
+
+        if (moveX >= 0 && moveX <= maxMove) {
+          slideButton.style.transform = `translateX(${moveX}px)`;
+          slideTrack.style.transform = `translateX(${moveX}px)`;
         }
       });
+
+      document.addEventListener('mouseup', () => {
+        if (!isSliding) return;
+
+        const maxMove = slideContainer.offsetWidth - slideButton.offsetWidth;
+        const currentX = parseInt(slideButton.style.transform.replace('translateX(', '').replace('px)', ''));
+
+        if (currentX >= maxMove * 0.9) {
+          showPage(nextPageId);
+        } else {
+          slideButton.style.transition = 'transform 0.3s ease';
+          slideTrack.style.transition = 'transform 0.3s ease';
+          slideButton.style.transform = 'translateX(0)';
+          slideTrack.style.transform = 'translateX(0)';
+        }
+
+        isSliding = false;
+      });
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeSlider('slide-button-page1', 'slide-track-page1', 'slide-container-page1', 'page2');
+      initializeSlider('slide-button-page2', 'slide-track-page2', 'slide-container-page2', 'page3');
+      initializeSlider('slide-button-page3', 'slide-track-page3', 'slide-container-page3', 'page4');
+    });
   </script>
 </body>
 </html>
